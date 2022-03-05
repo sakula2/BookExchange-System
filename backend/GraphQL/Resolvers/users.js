@@ -2,17 +2,41 @@ const User = require('../../models/user');
 const { ApolloError } = require('apollo-server-errors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require("bcryptjs");
+const { UserInputError } = require('apollo-server');
+const {
+    validateRegisterInput,
+    validateLoginInput
+  } = require('../../middleware/validator');
 
 module.exports = {
     Mutation: {
-        async registerUser(_, {registerInput: {username, email, password} }) {
+        async registerUser(_, {registerInput: {username, email, password } }) {
+
+            // Validate user data
+            const { valid, errors } = validateRegisterInput(
+                username,
+                email,
+                password
+            );
+            if (!valid) {
+                throw new UserInputError('Invalid user input', { errors });
+                console.log("User Input error", errors)
+            }
+
             //If any user already exists with the email id, throw error
             const oldUser = await User.findOne({ email });
 
             console.log("Request received for", username, email, password)
+            // if (oldUser) {
+            //     throw new ApolloError("User already registered with the current email! " + email, 'USER-EXISTS')
+            // }
             if (oldUser) {
-                throw new ApolloError("User already registered with the current email! " + email, 'USER-EXISTS')
-            }
+                throw new UserInputError('Email is taken', {
+                  errors: {
+                    email: 'This email is taken'
+                  }
+                });
+              }
 
             //Encypt password
             var encryptedPassword = await bcrypt.hash(password, 10);
@@ -46,6 +70,14 @@ module.exports = {
         async loginUser(_, {loginInput: {email, password} }) {
 
             //Check if an user exists with the given email
+            const { valid, errors } = validateLoginInput(
+                email,
+                password
+            );
+            if (!valid) {
+                throw new UserInputError('Invalid login input', { errors });
+                console.log("Invalid login input", errors)
+            }
 
             console.log("inside login user")
             const user = await User.findOne({ email });
@@ -74,8 +106,8 @@ module.exports = {
             }
         } else {
 
-            //If user does not exits, the throw error
-            throw new ApolloError('Incorrect Password', 'INCORRECT_PASSWORD');
+            //If user does not exists, the throw error
+            throw new ApolloError('Check your login info', 'INCORRECT_LOGIN_INFO');
         }
         }
     

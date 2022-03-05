@@ -6,7 +6,7 @@ const Footer = () => {
  <div className="footer">
 <div className='container'>
  
-  &copy; The Book Exchange app 
+  &copy; The Book Exchange app
 
   </div>
   </div>

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 const Navbar = () => {
-    const { user, logout } = useContext(AuthContext);
+    const { user, login,logout } = useContext(AuthContext);
 
     let navigate = useNavigate();
 
@@ -14,18 +14,25 @@ const Navbar = () => {
         logout()
         navigate('/')
     }
+    const onLogin = ()=> {
+        login()
+        navigate('/login')
+    }
     console.log(user);
     return (
         <header> 
         <div className='container'>
             <div className='inner-content'>
                 <div className='brand'>
-                    <Link to = '/homepage'>Book Exchange App</Link>
+                    <Link to = '/'>Book Exchange App</Link>
                 </div>
                 <ul className = 'nav-links'>
                
                 {user ?
                 <>
+                 <li>
+               <Link to = '/login' className='btn' onClick={onLogin}>Login</Link>
+                </li>
                <li>
                <Link to = '/' className='btn' onClick={onLogout}>Logout</Link>
                 </li>

@@ -6,10 +6,12 @@
     width: 50vw;
     height: 100vh;
     border-radius: 20px;
-    /* box-shadow: 0 0 15px 5px grey; */
-    /* background: white; */
+    font-size: large;
+    font-weight: bold;
+    font-style: inherit;
     position: absolute
 }
+
 
 .homepage > .button {
     background: #1877f2;

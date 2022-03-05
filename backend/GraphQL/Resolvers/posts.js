@@ -1,5 +1,7 @@
 const Post = require('../../models/Post');
 const user = require('../../models/user');
+const checkAuth = require('../../middleware/auth')
+
 module.exports ={
     Query: {
         async getPosts() {
@@ -24,6 +26,7 @@ module.exports ={
    }
 },
 Mutation :{
+
 async createPost(_, {content}){
     if (content.trim() === '') {
         throw new Error('Post body must not be empty');
