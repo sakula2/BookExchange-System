@@ -15,14 +15,13 @@ type Comment{
     content: String!
 }
 type Profile{
-    first_name: String!
-    last_name: String!
-    email: String!
-    phone: String
+    genre: String
+    education: String
+    profession: String
+    phone: String!
     city: String!
-    country: String
-    exchange_points: String
-    created_at: String
+    profileCreatedAt: String
+    points: String
 }
 type Query{
  getPosts: [Post]
@@ -36,7 +35,7 @@ type Mutation{
     createComment(postId: String!, content: String!): Post!
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
-    createProfile(user_id:ID, first_name: String!, last_name: String!, email: String!, phone: String!, city: String!, country: String!): Profile
+    createProfile(genre: String, education: String, profession: String, phone: String!, city: String!, profileCreatedAt: String, points: String): Profile
     deactivateProfile(user_id: ID!): String!
 }
 `;

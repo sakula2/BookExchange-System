@@ -27,13 +27,12 @@ Mutation :{
 createProfile: async (root,args,context,info) => {
 
     const newProfile = new Profile({
-        first_name:args.first_name,
-        last_name:args.last_name,
+        genre:args.genre,
+        education:args.education,
+        profession:args.profession,
         phone:args.phone,
-        email:args.email,
         city:args.city,
-        country:args.country,
-        created_at: new Date().toISOString()
+        profileCreatedAt:new Date().toISOString()
     });
     const profiles = await newProfile.save();
     return profiles;
