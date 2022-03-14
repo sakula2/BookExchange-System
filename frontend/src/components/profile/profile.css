@@ -1,24 +1,43 @@
-.profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content:center;
-    width: 50vw;
-    height: 100vh;
-    border-radius: 20px;
-    /* box-shadow: 0 0 15px 5px grey; */
-    /* background: white; */
-    position: absolute
+.Profile {
+    width: 750px;
+    height: auto!important;
+    background: mediumslateblue;
+    border: 1px solid #dddfe2;
+    margin-left: 5% !important;
+    box-shadow: 0 3px 6px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
+    border-radius: 6px;
+    padding: 2rem;
 }
 
-.profile > .button {
-    background: #1877f2;
-    border: 1px solid #1877f2;
-    color: #fff;
-    font-size: 1.25rem;
-    padding: 0.5rem;
-    margin: 0.5rem 0;
-    border-radius: 8px;
-    outline: none;
-    cursor: pointer;
+.Postbody {
+    background-color: #1877f2;
+}
+
+
+
+.custom-button {
+    background: palevioletred;
+    border: 0;
+    color: white;
+    padding: 10px;
+    width: 30%;
+}
+
+.custom-button:hover {
+    background-color: #12c2e9
+}
+
+.cell-data {
+    font-size: medium !important;
+    padding: 7px !important;
+    text-align: left !important;
+    width: 185px !important;
+}
+
+.data-separator {
+    width: 35px !important;
+}
+
+.profile-table {
+    margin-left: 150px !important;
 }

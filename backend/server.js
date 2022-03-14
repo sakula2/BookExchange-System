@@ -17,7 +17,8 @@ app.use(express.json());
 
     const server = new ApolloServer({
        typeDefs,
-       resolvers
+       resolvers,
+       context:({req})=>({req})
    });
 
 app.get('/', (req, res) => {

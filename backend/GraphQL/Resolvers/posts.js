@@ -1,10 +1,16 @@
+const { AuthenticationError, UserInputError } = require('apollo-server');
 const Post = require('../../models/Post');
-const user = require('../../models/user');
+const checkAuth = require('../../middleware/auth')
+
+const {
+    validatePost
+  } = require('../../utils/Validators');
+const { truncate } = require('fs');
 module.exports ={
     Query: {
         async getPosts() {
             try {
-              const posts = await Post.find().sort({createdAt:-1});
+              const posts = await Post.find({isAvailable:true});
               return posts;
             } catch (err) {
               console.log(err.message)
@@ -24,17 +30,28 @@ module.exports ={
    }
 },
 Mutation :{
-async createPost(_, {content}){
-    if (content.trim() === '') {
-        throw new Error('Post body must not be empty');
-      }
+async createPost(_, {ISNB,title,author,genres,url,PickUPAddress},context){
+    const user = checkAuth(context);
+   // const { errors, valid } = validatePost(title,author,ISNB,genres,url,);
+    //   if (!valid) {
+    //     throw new UserInputError('Errors', { errors });
+    //   }
     const newPost = new Post({
-        content,
+        ISNB,title,author,genres,url,PickUPAddress,
         createdAt: new Date().toISOString(),
-        user:user.id,
+        isAvailable:true,
+        username:user.username
     });
     const post = await newPost.save();
     return post;
+},
+async updatePost(_,{idnum, isAvailable}){
+const post = await Post.findOneAndUpdate(
+    {"_id": idnum},
+   { "$set":{isAvailable: isAvailable}},
+    {"new": true} //returns new document
+);
+ return post;
 },
 async deletePost(_, { postId }) {
       const post = await Post.findById(postId);

@@ -34,6 +34,7 @@ function Login(props) {
     }
 
     const {onChange, onSubmit, values} = useForm(loginUserCallback, {
+        username:"",
         email: "",
         password: ""
     });
@@ -50,7 +51,6 @@ function Login(props) {
             setErrors(graphQLErrors)
             console.log("graphql error", graphQLErrors)
             alert(" Please check your login info! ")
-            navigate('/login');
         },
         variables: {loginInput: values}
         
@@ -60,7 +60,8 @@ function Login(props) {
         <div className="login">
             <h1>Login</h1>
             <p> This is the login page, login below </p>
-            <input type="text" name="email" placeholder="Your Email" onChange={onChange}></input>
+            <input type="text" name="username" placeholder="username" onChange={onChange}></input>
+            <input type="text" name="email" placeholder="Your email" onChange={onChange}></input>
             <input type="password" name="password" placeholder="Your Password" onChange={onChange}></input>
             <div className="button" onClick={onSubmit} >Login</div>
             <div>or</div>

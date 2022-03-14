@@ -7,7 +7,7 @@ import { gql } from 'graphql-tag';
 import { useNavigate } from "react-router-dom";
 
 
-const REGISTER_USER = gql `
+const REGISTER_USER = gql`
     mutation Mutation(
         $registerInput: RegisterInput
     ) {
@@ -26,9 +26,9 @@ function Register(props) {
     const [errors, setErrors] = useState([]);
 
     const registerUserCallback = () => {
-        console.log("Callback hit");
+        //console.log("Callback hit");
         registerUser();
-        console.log("Register user called")
+        //console.log("Register user called")
     }
     const { onChange, onSubmit, values } = useForm(registerUserCallback, {
         username: "",
@@ -37,36 +37,36 @@ function Register(props) {
         reEnterPassword: ""
     });
 
-    const [registerUser, {loading} ] = useMutation(REGISTER_USER, {
-        update(proxy, {data: { registerUser: userData}}) {
+    const [registerUser, { loading }] = useMutation(REGISTER_USER, {
+        update(proxy, { data: { registerUser: userData } }) {
             context.login(userData);
             console.log(userData)
             console.log("register user: ", registerUser)
-            alert("You have been successfully registered! Please go the login page to log in")
+            alert("You have been successfully registered! Please log in to the site")
             navigate('/login');
         },
         onError({ graphQLErrors }) {
             setErrors(graphQLErrors)
             console.log("graphql error", graphQLErrors)
-            alert("This user already exists! Please login")
-            navigate('/login');
+            alert("Please check your input!")
+            navigate('/register');
         },
-        variables: {registerInput: values}
-        
+        variables: { registerInput: values }
+
     })
 
-return (
+    return (
 
-    <div className="register">
-
-    <h1>Register</h1>
-    <input type="text" name="username" placeholder="Your Name" onChange={onChange}></input>
-    <input type="text" name="email" placeholder="Your Email" onChange={onChange}></input>
-    <input type="password" name="password" placeholder="Your Password" onChange={onChange}></input>
-    <input type="password" name="reEnterPassword" placeholder="Re-enter Password" onChange={onChange}></input>
-   <div className="button" onClick={onSubmit} >Register</div>
-    <div>or</div>
-    <div className="button" onClick={() => navigate("/login")}>Login</div>
-</div>
-)}
+        <div className="register">
+            <h1>Register</h1>
+            <input type="text" name="username" placeholder="Your Name" onChange={onChange}></input>
+            <input type="text" name="email" placeholder="Your Email" onChange={onChange}></input>
+            <input type="password" name="password" placeholder="Your Password" onChange={onChange}></input>
+            <input type="password" name="reEnterPassword" placeholder="Re-enter Password" onChange={onChange}></input>
+            <div className="button" onClick={onSubmit} >Register</div>
+            <div>or</div>
+            <div className="button" onClick={() => navigate("/login")}>Login</div>
+        </div>
+    )
+}
 export default Register;
